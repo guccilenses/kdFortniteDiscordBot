@@ -69,16 +69,14 @@ async def on_message(message):
             embed = discord.Embed(colour=discord.Colour(0x45278e), url="https://github.com/af1/kdFortniteDiscordBot",)
             embed.set_author(name="Verify " + message.author.name, icon_url=message.author.avatar_url)
             #embed.set_footer(text="Fortnite Verify Bot", icon_url=client.user.avatar_url)
-            embed.add_field(name=message.author.name + " does not have over a " + msgVerified + " K/D.", value="** **", inline=False)
-            embed.add_field(name="Season 6 Squads K/D: **" + msgRatio + "**", value="** **", inline=True)
+            embed.add_field(name=message.author.name + " does not have over a " + msgVerified + " K/D.", value="Season 6 Squads K/D: **" + msgRatio + "**", inline=False)
             await client.send_message(message.channel, embed=embed)
         elif ratio >= VERIFIED:
             role = discord.utils.get(message.server.roles, name=LIST[0])
             embed = discord.Embed(colour=discord.Colour(0x45278e), url="https://github.com/af1/kdFortniteDiscordBot",)
             embed.set_author(name="Verify " + message.author.name, icon_url=message.author.avatar_url)
             #embed.set_footer(text="Fortnite Verify Bot", icon_url=client.user.avatar_url)
-            embed.add_field(name=message.author.name + " has over a " + msgVerified + " K/D. Verified!", value="** **", inline=False)
-            embed.add_field(name="Season 6 Squads K/D: **" + msgRatio + "**", value="** **", inline=True)
+            embed.add_field(name=message.author.name + " has over a " + msgVerified + " K/D. Verified!", value="Season 6 Squads K/D: **" + msgRatio + "**", inline=False)
             await client.send_message(message.channel, embed=embed)
             await client.add_roles(message.author, role) 
             
