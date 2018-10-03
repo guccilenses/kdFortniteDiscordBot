@@ -44,7 +44,10 @@ async def on_message(message):
         await client.send_message(message.channel, 'Latest patch notes: https://www.epicgames.com/fortnite/en/news')
     # The command !help explains the one function
     if message.content.startswith('!help'):
-        await client.send_message(message.channel, 'Set your Discord nickname to be exacly the same as your Epic Games account name. Then type \'!verify\'. The bot looks at your squad K/D for the current season, so if you have no games played yet, the bot can not verify you.')
+        embed = discord.Embed(colour=discord.Colour(0x8e2626), url="https://github.com/af1/kdFortniteDiscordBot",)
+        embed.set_author(name="Verify Bot Help", icon_url="")
+        embed.add_field(name="Set your Discord nickname to be exacly the same as your Epic Games player name. Then type \'!verify\'.", value="You can change your nickname by typing \"/nick *your_ign_here*\". The bot looks at your squad K/D for the current season, so if you have no games played yet, the bot won\'t be able to verify you.", inline=False)
+        await client.send_message(message.channel, embed=embed)
     # The command !verify return attribute a rank according to the K/D of the user
     if message.content.startswith("!verify"):
         for list in LIST:
@@ -56,27 +59,30 @@ async def on_message(message):
         print(ratio)
         print("-")
         if ratio == -1.0:
-            msg = "Your Discord name and IGN must be exactly the same. Change your Discord nickname and try again.".format(message)
-            await client.send_message(message.channel, msg)
+            embed = discord.Embed(colour=discord.Colour(0x8e2626), url="https://github.com/af1/kdFortniteDiscordBot",)
+            embed.set_author(name="Verify " + message.author.display_name, icon_url=message.author.avatar_url)
+            embed.add_field(name="Fortnite player **" + message.author.display_name + "** not found.", value="\nYour Discord nickname and IGN must be exactly the same. \nChange your Discord nickname to your IGN and try again.", inline=False)
+            await client.send_message(message.channel, embed=embed)
         elif ratio == -2.0:
-            msg = "Data not found. Either Fortnite Tracker is down, or your account is not a PC account.".format(message)
-            await client.send_message(message.channel, msg)
+            embed = discord.Embed(colour=discord.Colour(0x8e2626), url="https://github.com/af1/kdFortniteDiscordBot",)
+            embed.set_author(name="Verify " + message.author.display_name, icon_url=message.author.avatar_url)
+            embed.add_field(name="Data not found.", value="Fortnite Tracker is down. Please try again shortly.", inline=False)
+            await client.send_message(message.channel, embed=embed)
         elif ratio == -3.0:
-            msg = "No stats found for squad mode in the current season. Play some games and try again.".format(message)
-            await client.send_message(message.channel, msg)
+            embed = discord.Embed(colour=discord.Colour(0x8e2626), url="https://github.com/af1/kdFortniteDiscordBot",)
+            embed.set_author(name="Verify " + message.author.display_name, icon_url=message.author.avatar_url)
+            embed.add_field(name="No stats found for squad mode in the current season.", value="Play some games and try again.", inline=False)
+            await client.send_message(message.channel, embed=embed)
         elif ratio > 0 and ratio < VERIFIED:
-            role = discord.utils.get(message.server.roles, name=LIST[0])
             embed = discord.Embed(colour=discord.Colour(0x45278e), url="https://github.com/af1/kdFortniteDiscordBot",)
-            embed.set_author(name="Verify " + message.author.name, icon_url=message.author.avatar_url)
-            #embed.set_footer(text="Fortnite Verify Bot", icon_url=client.user.avatar_url)
-            embed.add_field(name=message.author.name + " does not have over a " + msgVerified + " K/D.", value="Season 6 Squads K/D: **" + msgRatio + "**", inline=False)
+            embed.set_author(name="Verify " + message.author.display_name, icon_url=message.author.avatar_url)
+            embed.add_field(name=message.author.display_name + " does not have over a " + msgVerified + " K/D.", value="Season 6 Squads K/D: **" + msgRatio + "**", inline=False)
             await client.send_message(message.channel, embed=embed)
         elif ratio >= VERIFIED:
             role = discord.utils.get(message.server.roles, name=LIST[0])
             embed = discord.Embed(colour=discord.Colour(0x45278e), url="https://github.com/af1/kdFortniteDiscordBot",)
-            embed.set_author(name="Verify " + message.author.name, icon_url=message.author.avatar_url)
-            #embed.set_footer(text="Fortnite Verify Bot", icon_url=client.user.avatar_url)
-            embed.add_field(name=message.author.name + " has over a " + msgVerified + " K/D. Verified!", value="Season 6 Squads K/D: **" + msgRatio + "**", inline=False)
+            embed.set_author(name="Verify " + message.author.display_name, icon_url=message.author.avatar_url)
+            embed.add_field(name=message.author.display_name + " has over a " + msgVerified + " K/D. Verified!", value="Season 6 Squads K/D: **" + msgRatio + "**", inline=False)
             await client.send_message(message.channel, embed=embed)
             await client.add_roles(message.author, role) 
             
