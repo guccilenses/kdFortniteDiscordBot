@@ -41,7 +41,7 @@ async def on_message(message):
         return
     # The command !patch return a link with the lastest patch note
     if message.content.startswith('!patch'):
-        await client.send_message(message.channel, 'Latest patch notes: https://www.epicgames.com/fortnite/en/news')
+        await client.send_message(message.channel, 'Latest patch notes: https://www.epicgames.com/fortnite/en-US/patch-notes/')
     # The command !help explains the one function
     if message.content.startswith('!help'):
         embed = discord.Embed(colour=discord.Colour(0x8e2626), url="https://github.com/af1/kdFortniteDiscordBot",)
@@ -61,7 +61,7 @@ async def on_message(message):
         if ratio == -1.0:
             embed = discord.Embed(colour=discord.Colour(0x8e2626), url="https://github.com/af1/kdFortniteDiscordBot",)
             embed.set_author(name="Verify " + message.author.display_name, icon_url=message.author.avatar_url)
-            embed.add_field(name="Fortnite player **" + message.author.display_name + "** not found.", value="\nYour Discord nickname and IGN must be exactly the same. \nChange your Discord nickname to your IGN and try again.", inline=False)
+            embed.add_field(name="Fortnite player **" + message.author.display_name + "** not found.", value="\nYour Discord nickname and IGN must be exactly the same. Change your Discord nickname to your IGN and try again.", inline=False)
             await client.send_message(message.channel, embed=embed)
         elif ratio == -2.0:
             embed = discord.Embed(colour=discord.Colour(0x8e2626), url="https://github.com/af1/kdFortniteDiscordBot",)
